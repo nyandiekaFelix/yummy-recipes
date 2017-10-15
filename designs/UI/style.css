@@ -13,3 +13,17 @@ button a:hover{
     cursor: pointer;
     text-decoration: none;
 }
+
+.recipe-body > h2,
+.recipe-body > h5{
+    text-decoration: underline;
+}
+
+.recipe-span{
+    font-style: italic;
+    padding-bottom: 30px;
+}
+
+.recipe-btn{
+    margin: 10px;
+}

@@ -50,29 +50,36 @@
     <div class="content">
 	    <div class="container jumbotron">
             <div class="col-md-7">
-                <h2>Write Recipe</h2>
-        
-                <form method="post" role="form">
-                    <div class="form-group">
-                        <input class="form-control input-md" name="category" 
-                            placeholder="Category" required autofocus>
-                    </div>
-
-                    <div class="form-group has-feedback">
-                        <textarea rows="5" cols="50" class="form-control input-md" type="ingredients" 
-                            placeholder="Ingredients" required></textarea>
-                    </div>
-
-                    <div class="form-group has-feedback">
-                        <textarea rows="5" cols="50" class="form-control input-md" type="instructions" 
-                            placeholder="Instructions" required></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-md btn-success">Save</button>
+                
+                <div class="recipe-body">                    
+                    <h2>Recipe Title</h2>
+                    <h5>Category</h5>
+                    <span class="recipe-span">Here we write a short description on what we are going to cook.</span>
+                    <br>
+                    <br>
                     
-                </form>
+                    <div class="ingredients">
+                        <span class="recipe-span">Ingredients:</span>
+                        <ul>
+                            <li>Item 1</li>
+                            <li>Item 2</li>
+                            <li>Item 3</li>
+                        </ul>
+                    </div>
+                    <div class="instructions">
+                        <span class="recipe-span">Instructions:</span>
+                        <ul>
+                            <li>Item 1</li>
+                            <li>Item 2</li>
+                            <li>Item 3</li>
+                        </ul>
+                    </div>
+                </div>
+                <button class="btn btn-md btn-success recipe-btn">Edit</button>
+                <button class="btn btn-md btn-danger recipe-btn">Delete</button>
             </div>
         </div>
-	</div>
+    </div>
 </body>
 </html>
 
