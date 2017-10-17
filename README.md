@@ -26,7 +26,7 @@ virtualenv-wrapper
 
 ## Running the tests
 
-- ```$ nosetests ``` 
+- ```$ nosetests --with-coverage ``` 
 
 
 ## Built With
