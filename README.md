@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/nyandiekaFelix/yummy-recipes.svg?branch=master)](https://travis-ci.org/nyandiekaFelix/yummy-recipes)
+
 # Project Title
 
 Yummy Recipes enables users to write and share recipes, as well as view edit or delete them.
