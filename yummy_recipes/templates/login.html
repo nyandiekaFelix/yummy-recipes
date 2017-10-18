@@ -1,0 +1,23 @@
+{% extends "index.html" %}
+{% block title %}Log In To Your Account{% endblock %}
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}" />
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-12">
+        {% from "_formhelpers.html" import render_field %}
+        <form method="POST" action="{{ url_for('login')}}">
+        {{form.csrf_token}}
+        {{ render_field(form.email, class='form-control', placeholder='name@domain.com') }}
+        {{ render_field(form.password, class='form-control') }}
+        {{form.submit(class="btn btn-success btn-block")}}
+        </form>
+        <br><br>
+        <h6>Don't have an account? <a href="/signup">Sign Up</a></h6>
+    </div>
+</div>
+{% endblock %}
