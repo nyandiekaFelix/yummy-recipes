@@ -1,23 +1,20 @@
 {% extends "index.html" %}
-{% block title %}Log In To Your Account{% endblock %}
+{% block title %}Log In{% endblock %}
 {% block head %}
 {{ super() }}
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}" />
 {% endblock %}
 
 {% block content %}
 
-<div class="row">
-    <div class="col-md-12">
-        {% from "_formhelpers.html" import render_field %}
-        <form method="POST" action="{{ url_for('login')}}">
+<div class="container jumbotron text-centre">
+    {% from "form_render.html" import render_input %}
+    <form method="POST" class="col-md-7" action="{{ url_for('login')}}">
         {{form.csrf_token}}
-        {{ render_field(form.email, class='form-control', placeholder='name@domain.com') }}
-        {{ render_field(form.password, class='form-control') }}
-        {{form.submit(class="btn btn-success btn-block")}}
-        </form>
-        <br><br>
-        <h6>Don't have an account? <a href="/signup">Sign Up</a></h6>
-    </div>
+        {{ render_input(form.email, class='form-control input-md', placeholder='Email') }}
+        {{ render_input(form.password, class='form-control input-md',  placeholder='Password') }}
+        <button type="submit" class="btn btn-md btn-success">Log in</button>
+        <span class="pull-right">Don't have an account ? <a href="/signup">Sign up</a></span>
+    </form>
+    
 </div>
 {% endblock %}

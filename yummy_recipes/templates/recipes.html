@@ -1,85 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+{% extends "index.html" %}
+{% block title %}My Recipes{% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock %}
 
-    <link href="style.css" rel="stylesheet">
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
-        rel="stylesheet" 
-        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" 
-        crossorigin="anonymous">
-
-    <script
-        src="https://code.jquery.com/jquery-3.2.1.min.js"
-        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-        crossorigin="anonymous">
-    </script>      
-
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" 
-        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" 
-        crossorigin="anonymous">
-    </script>
-
-    <title>My Recipes</title>
-</head>
-<body>
-    <div class="navbar navbar-inverse navbar-static-top">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#customNav">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>                        
-                </button>
-                <a class="navbar-brand" href="../index.html">Yummy Recipes</a>
-            </div>
-            <div class="collapse navbar-collapse" id="customNav">
-                <ul class="nav navbar-nav pull-right">
-                    <li><a href="login.html">Login</a></li>
-                    <li><a href="signup.html">Sign up</a></li>
-                    <li><a href="recipes.html">My Recipes</a></li>
-                    <li><a href="#">Logout</a></li>
-                </ul>
-            </div>
+{% block content %}
+    <div class="container jumbotron">
+        <div class="col-md-7">
             
-		</div>
-    </div>
-
-    <div class="content">
-	    <div class="container jumbotron">
-            <div class="col-md-7">
+            <div class="recipe-body">                    
+                <h2>Recipe Title</h2>
+                <h5>Category</h5>
+                <span class="recipe-span">Here we write a short description on what we are going to cook.</span>
+                <br>
+                <br>
                 
-                <div class="recipe-body">                    
-                    <h2>Recipe Title</h2>
-                    <h5>Category</h5>
-                    <span class="recipe-span">Here we write a short description on what we are going to cook.</span>
-                    <br>
-                    <br>
-                    
-                    <div class="ingredients">
-                        <span class="recipe-span">Ingredients:</span>
-                        <ul>
-                            <li>Item 1</li>
-                            <li>Item 2</li>
-                            <li>Item 3</li>
-                        </ul>
-                    </div>
-                    <div class="instructions">
-                        <span class="recipe-span">Instructions:</span>
-                        <ul>
-                            <li>Item 1</li>
-                            <li>Item 2</li>
-                            <li>Item 3</li>
-                        </ul>
-                    </div>
+                <div class="ingredients">
+                    <span class="recipe-span">Ingredients:</span>
+                    <ul>
+                        <li>Item 1</li>
+                        <li>Item 2</li>
+                        <li>Item 3</li>
+                    </ul>
                 </div>
-                <button class="btn btn-md btn-success recipe-btn">Edit</button>
-                <button class="btn btn-md btn-danger recipe-btn">Delete</button>
+                <div class="instructions">
+                    <span class="recipe-span">Instructions:</span>
+                    <ul>
+                        <li>Item 1</li>
+                        <li>Item 2</li>
+                        <li>Item 3</li>
+                    </ul>
+                </div>
             </div>
+            <button class="btn btn-md btn-success recipe-btn">Edit</button>
+            <button class="btn btn-md btn-danger recipe-btn">Delete</button>
         </div>
     </div>
-</body>
-</html>
 
+{% endblock %}
