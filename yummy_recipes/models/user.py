@@ -1,7 +1,7 @@
 import random
 
-USERS = []
-
+USERS = {}
+    
 class User(object):
     ''' User model '''
     def __init__(self, email, first_name, second_name, password):
@@ -11,4 +11,4 @@ class User(object):
         self.first_name = first_name
         self.second_name = second_name
         self.password = password
-           
+        

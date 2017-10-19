@@ -1,6 +1,6 @@
 import random
 
-CATEGORIES = []
+CATEGORIES = {}
 
 class RecipeCategory(object):
     ''' Recipe Category Model '''
