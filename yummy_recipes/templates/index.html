@@ -35,14 +35,18 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>                        
                 </button>
-                <a class="navbar-brand" href="/home">Yummy Recipes</a>
+                <a class="navbar-brand" href="#">Yummy Recipes</a>
             </div>
             <div class="collapse navbar-collapse" id="customNav">
                 <ul class="nav navbar-nav pull-right">
-                    <li><a href="/login">Login</a></li>
-                    <li><a href="/signup">Sign up</a></li>
-                    <li><a href="/myrecipes">My Recipes</a></li>
-                    <li><a href="#">Logout</a></li>
+                    {% if is_auth %}
+                        <li><a href="/categories">Categories</a></li>
+                        <li><a href="/recipes">My Recipes</a></li>
+                        <li><a href="/logout">Logout</a></li>
+                    {% else %}
+                        <li><a href="/login">Login</a></li>
+                        <li><a href="/signup">Sign up</a></li>
+                    {% endif %}
                 </ul>
             </div>
             
@@ -53,13 +57,12 @@
             {% with messages = get_flashed_messages() %}
                 {% if messages %}
                     {% for message in messages %}
-                    <div class="alert alert-{{ message }} alert-dismissable" role="alert" >
+                    <div class="alert alert-{{ message }} alert-dismissable col-md-7 text-centre" role="alert" >
                         <button type="button" class="close" data-dismiss= "alert">&times;</button>
-                        <p style="background-color:white; 
-                            border:1px solid red;
+                        <p style="background-color: transparent; 
                             border-radius: 10px;
                             min-height: 50px;
-                            color: black">{{message}}
+                            color: rgb(243, 12, 12)">{{message}}
                         </p>
                     </div>
                     {% endfor %}
