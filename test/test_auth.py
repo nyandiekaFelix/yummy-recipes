@@ -6,13 +6,13 @@ from yummy_recipes.models.user import User, USERS
 class TestAuth(unittest.TestCase):
     ''' Helper methods '''
 
-    def signup(self, first_name, last_name, email, password, 
+    def signup(self, first_name, second_name, email, password, 
                 password_confirm):
         
         res = APP.test_client(self)
         return res.post('/signup', data=dict(
             first_name=first_name,
-            last_name=last_name,
+            second_name=second_name,
             email=email,
             password=password,
             password_confirm=password_confirm), 
@@ -32,7 +32,7 @@ class TestAuth(unittest.TestCase):
         response = self.signup("Firstish", "Secondish", "name@domain.com", 
                                 "Very_1secret", "Very_1secret")
         self.assertEqual(response.status_code, 200)
-
+ 
     def test_login(self):
         ''' Should login Valid User '''
 
