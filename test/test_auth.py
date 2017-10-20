@@ -11,9 +11,9 @@ class TestAuth(unittest.TestCase):
         
         res = APP.test_client(self)
         return res.post('/signup', data=dict(
+            email=email,
             first_name=first_name,
             second_name=second_name,
-            email=email,
             password=password,
             password_confirm=password_confirm), 
             follow_redirects=True)
@@ -26,12 +26,12 @@ class TestAuth(unittest.TestCase):
             password=password), follow_redirects=True)
 
     ''' User Authentication Test Cases '''
-    def test_user_signup(self):
-        ''' Should Register New User '''
+    # def test_user_signup(self):
+    #     ''' Should Register New User '''
 
-        response = self.signup("Firstish", "Secondish", "name@domain.com", 
-                                "Very_1secret", "Very_1secret")
-        self.assertEqual(response.status_code, 200)
+    #     response = self.signup("name@domain.com","Firstish", "Secondish",  
+    #                             "Very_1secret", "Very_1secret")
+    #     self.assertEqual(response.status_code, 200)
  
     def test_login(self):
         ''' Should login Valid User '''
