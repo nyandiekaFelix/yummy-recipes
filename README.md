@@ -1,6 +1,5 @@
 [![Build Status](https://travis-ci.org/nyandiekaFelix/yummy-recipes.svg?branch=master)](https://travis-ci.org/nyandiekaFelix/yummy-recipes)
-[![Coverage Status](https://coveralls.io/repos/github/nyandiekaFelix/yummy-recipes/badge.svg?branch=master)](https://coveralls.io/github/nyandiekaFelix/yummy-recipes)
-
+[![Coverage Status](https://coveralls.io/repos/github/nyandiekaFelix/yummy-recipes/badge.svg?branch=master)](https://coveralls.io/github/nyandiekaFelix/yummy-recipes?branch=master)
 # Project Title
 
 Yummy Recipes enables users to write and share recipes, as well as view edit or delete them.
