@@ -1,0 +1,20 @@
+{% extends "index.html" %}
+{% block title %}Log In{% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block content %}
+
+<div class="container jumbotron text-centre">
+    {% from "form_render.html" import render_input %}
+    <form method="POST" class="col-md-7" action="{{ url_for('login')}}">
+        {{form.csrf_token}}
+        {{ render_input(form.email, class='form-control input-md', placeholder='Email') }}
+        {{ render_input(form.password, class='form-control input-md',  placeholder='Password') }}
+        <button type="submit" class="btn btn-md btn-success">Log in</button>
+        <span class="pull-right">Don't have an account ? <a href="/signup">Sign up</a></span>
+    </form>
+    
+</div>
+{% endblock %}

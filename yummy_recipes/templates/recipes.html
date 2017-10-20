@@ -1,0 +1,40 @@
+{% extends "index.html" %}
+{% block title %}My Recipes{% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block content %}
+    <div class="container jumbotron">
+        <div class="col-md-7">
+            
+            <div class="recipe-body">                    
+                <h2>Recipe Title</h2>
+                <h5>Category</h5>
+                <span class="recipe-span">Here we write a short description on what we are going to cook.</span>
+                <br>
+                <br>
+                
+                <div class="ingredients">
+                    <span class="recipe-span">Ingredients:</span>
+                    <ul>
+                        <li>Item 1</li>
+                        <li>Item 2</li>
+                        <li>Item 3</li>
+                    </ul>
+                </div>
+                <div class="instructions">
+                    <span class="recipe-span">Instructions:</span>
+                    <ul>
+                        <li>Item 1</li>
+                        <li>Item 2</li>
+                        <li>Item 3</li>
+                    </ul>
+                </div>
+            </div>
+            <button class="btn btn-md btn-success recipe-btn">Edit</button>
+            <button class="btn btn-md btn-danger recipe-btn">Delete</button>
+        </div>
+    </div>
+
+{% endblock %}
