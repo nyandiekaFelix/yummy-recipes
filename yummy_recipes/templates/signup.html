@@ -11,8 +11,6 @@
     <form method="POST"class="col-md-7" action="{{ url_for('signup')}}">
         {{form.csrf_token}}
         {{ render_input(form.email, class='form-control input-md', placeholder='Email') }}
-        {{ render_input(form.first_name, class='form-control input-md', placeholder='First Name ') }}
-        {{ render_input(form.second_name, class='form-control input-md', placeholder='Second Name') }}
         {{ render_input(form.password, class='form-control input-md', placeholder='Password') }}
         {{ render_input(form.password_confirm, class='form-control input-md', placeholder='Confirm Password') }}
         <button type="submit" class="btn btn-md btn-success">Sign Up</button>
