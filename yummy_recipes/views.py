@@ -21,17 +21,16 @@ def signup():
     form = Signup()
     if request.method == 'POST' and form.validate_on_submit():
         email = form.email.data
-        first_name = form.first_name.data
-        second_name = form.second_name.data
         password = form.password.data
         
         if email in USERS:
             flash("An account with that email already exists.")
         else:
-            user = User(email, first_name, second_name, password)
+            is_auth = True
+
+            user = User(email, password)
             session['logged_in'] = True
-            session['email'] = user.email
-            session['password'] = password
+            session['user'] = user.email
             USERS[email] = user
 
             return redirect(url_for('categories'))
@@ -42,15 +41,14 @@ def signup():
 def login():
     ''' Log In User '''
     is_auth = False
-
     form = Login()
     if request.method == 'POST' and form.validate_on_submit():
         email = form.email.data
         password = form.password.data
         
-        if session.get('email') == email and\
-            session.get('password') == password:
-                session['email'] = email
+        if email in USERS and USERS[email].password == password:
+                is_auth = True
+                session['user'] = email
                 session["logged_in"] = True
                 return redirect(url_for('categories'))
         else:
@@ -67,32 +65,38 @@ def logout():
 def categories():
     
     form = Category()
+    creator = session.get('user')
+    user_categories =  [categ for categ in CATEGORIES if 
+                        categ.created_by == creator ] 
 
-    if 'email' in session:
+    if session.get('logged_in') is True and\
+         session.get('user') in USERS:
+
         is_auth = True
 
         if form.validate_on_submit():
             category_name = form.category_name.data
-            created_by = session.get('email')
+            created_by = session.get('user')
             recipe_category = RecipeCategory(category_name, created_by)
             
             if category_name in CATEGORIES:
                 flash('That category already exists')            
             else:
                 CATEGORIES[recipe_category] = recipe_category
-                    
+
             return redirect(url_for('categories'))
 
     else:
         is_auth = False
-        return redirect(url_for('login'))     
+        return redirect(url_for('signup'))     
     
-    return render_template('recipe_category.html', is_auth=is_auth, form=form, categs=CATEGORIES)
+    return render_template('recipe_category.html', is_auth=is_auth, form=form, 
+                            categs=user_categories)
 
 @APP.route('/recipes')
 def recipes():
 
-    if 'email' in session:
+    if 'user' in session:
         is_auth = True
     else:
         is_auth = False  
