@@ -54,7 +54,7 @@ Enter the following commands on your terminal one by one:
 
 ## Running the tests
 
-- With Coverage: 
+- With Coverage Report: 
     
     ```$ nosetests --with-coverage ```
 
