@@ -5,18 +5,6 @@ from wtforms.validators import Length, Email, InputRequired, DataRequired, Regex
 class Signup(Form):
     ''' User registration form '''
     email = StringField('Email:', validators=[Email(), InputRequired()])
-
-    first_name = StringField('First Name:', 
-                                validators=[InputRequired(),
-                                DataRequired(),
-                                Regexp("^[A-Za-z_-]*$", 0, 
-                                'Use letters only and no spaces')])
-
-    second_name = StringField('Second Name:', validators=[InputRequired(),
-                                DataRequired(),
-                                Regexp("^[A-Za-z_-]*$", 0,
-                                        'Use letters only and no spaces')])
-
     password = PasswordField('Password:', validators=[InputRequired(), 
                 EqualTo('password_confirm', 
                 message=(u'Passwords Do Not Match')),
