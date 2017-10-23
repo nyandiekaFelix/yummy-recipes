@@ -1,6 +1,6 @@
 from flask_wtf import Form
-from wtforms import StringField, SubmitField, PasswordField, IntegerField
-from wtforms.validators import Length, Email, InputRequired, DataRequired, Regexp, EqualTo, Optional
+from wtforms import StringField, PasswordField, SelectField
+from wtforms.validators import Email, InputRequired, DataRequired, Regexp, EqualTo
 
 class Signup(Form):
     ''' User registration form '''
@@ -27,28 +27,28 @@ class Category(Form):
                                                 0,
                                                 'Use only letters numbers and spaces')])
 
-class Recipe(Form):
+class RecipeForm(Form):
+    ''' individual recipes form '''
+    category_name = StringField(
+        'Category Name: ', validators=[InputRequired(),
+                                        DataRequired(),
+                                        Regexp("^[A-Za-z0-9_-]+( +[A-Za-z0-9_-]+)*$",
+                                                0,
+                                                'Use only letters numbers and spaces')])
     recipe_name = StringField(
         'Recipe Name: ', validators=[InputRequired(),
                                         DataRequired(),
                                         Regexp("^[A-Za-z0-9_-]+( +[A-Za-z0-9_-]+)*$",
                                                 0,
                                                 'Use only letters numbers and spaces')])
-    description = StringField(
-        'Description: ', validators=[InputRequired(),
-                                        DataRequired(),
-                                        Regexp("^[A-Za-z0-9_-]+( +[A-Za-z0-9_-]+)*$",
-                                                0,
-                                                'Use only letters numbers and spaces')])
-    
-    Ingredients = StringField(
+    ingredients = StringField(
         'Ingredients: ', validators=[InputRequired(),
                                         DataRequired(),
                                         Regexp("^[A-Za-z0-9_-]+( +[A-Za-z0-9_-]+)*$",
                                                 0,
                                                 'Use only letters numbers and spaces')])
     
-    Instructions = StringField(
+    instructions = StringField(
         'Instructions: ', validators=[InputRequired(),
                                         DataRequired(),
                                         Regexp("^[A-Za-z0-9_-]+( +[A-Za-z0-9_-]+)*$",
