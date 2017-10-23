@@ -1,17 +1,19 @@
 from flask import session, render_template, redirect, request, url_for, flash
 
 from yummy_recipes import APP
-from yummy_recipes.forms import Login, Signup, Recipe, Category
+from yummy_recipes.forms import Login, Signup, RecipeForm, Category
 from yummy_recipes.models.user import User, USERS
-from yummy_recipes.models.recipe import RecipeCategory, Recipe, CATEGORIES
+from yummy_recipes.models.recipe import RecipeCategory, Recipe
 
 @APP.route('/')
 @APP.route('/home')
 def home():
+    ''' Base route '''
     return render_template('home.html')
 
 @APP.errorhandler(404)
 def page_not_found(e):
+    ''' 404 error handler '''
     return render_template('404.html')
 
 @APP.route('/signup', methods=['POST', 'GET'])
@@ -58,31 +60,31 @@ def login():
 
 @APP.route('/logout')
 def logout():
+    ''' Log Out User '''
     session['logged_in'] = False
     return redirect(url_for('home'))
     
 @APP.route('/categories', methods=['POST', 'GET'])
 def categories():
+    ''' Recipe Categories  '''
+    categ_form = Category()
     
-    form = Category()
-    creator = session.get('user')
-    user_categories =  [categ for categ in CATEGORIES if 
-                        categ.created_by == creator ] 
 
     if session.get('logged_in') is True and\
          session.get('user') in USERS:
 
         is_auth = True
+        creator = session.get('user')
+        user_categs = USERS[creator].categories
 
-        if form.validate_on_submit():
-            category_name = form.category_name.data
-            created_by = session.get('user')
-            recipe_category = RecipeCategory(category_name, created_by)
-            
-            if category_name in CATEGORIES:
+        if categ_form.validate_on_submit():
+            category_name = categ_form.category_name.data
+
+            if category_name in USERS[creator].categories:
                 flash('That category already exists')            
             else:
-                CATEGORIES[recipe_category] = recipe_category
+                new_category = RecipeCategory(category_name)
+                user_categs[new_category] = new_category
 
             return redirect(url_for('categories'))
 
@@ -90,16 +92,36 @@ def categories():
         is_auth = False
         return redirect(url_for('signup'))     
     
-    return render_template('recipe_category.html', is_auth=is_auth, form=form, 
-                            categs=user_categories)
+    return render_template('recipes.html', is_auth=is_auth, categ_form=categ_form, 
+                            categs=user_categs)
 
-@APP.route('/recipes')
+@APP.route('/recipes', methods=['POST', 'GET'])
 def recipes():
+    ''' Individual recipes '''
+    form = RecipeForm()
 
-    if 'user' in session:
+    if session.get('logged_in') is True and\
+         session.get('user') in USERS:
         is_auth = True
+        creator = session.get('user')
+        user_categs = USERS[creator].categories
+        user_recs = []
+        
+        if form.validate_on_submit():
+            category_name = form.category_name.data
+            recipe_name = form.recipe_name.data
+            ingredients = form.ingredients.data
+            instructions = form.instructions.data
+            category = RecipeCategory(category_name)
+            user_categs[category_name] = category
+            
+            new_recipe = Recipe(recipe_name, ingredients, instructions)
+            user_categs[category_name].recipes.append(new_recipe)
+            user_recs.append(new_recipe)
+            return redirect(url_for('recipes'))
     else:
-        is_auth = False  
+        is_auth = False
+        return redirect(url_for('signup'))
 
-    return render_template('recipes.html', is_auth=is_auth)
+    return render_template('recipes_detail.html', is_auth=is_auth, form=form, recs=user_recs)
 
