@@ -43,9 +43,12 @@ button a:hover{
     list-style-type: none;
 }
 
-.recipe-body > h2,
-.recipe-body > h5{
-    text-decoration: underline;
+.recipe{
+    margin-bottom: 10px;
+    border: 1px solid slateblue; 
+    padding: 10px;
+    color: #000;
+    background-color: #9e9e9e; 
 }
 
 .recipe-span{

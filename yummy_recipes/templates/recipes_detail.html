@@ -25,16 +25,18 @@
                 <br/>
                 <br/>
                 {% for recipe in recs %}
-                    {% if recipe.category_name is not none %} 
-                        <thead class="recipe">
-                            <th>Title: {{ recipe.recipe_name }} </th>
+                    {% if recipe.category_name is not none %}
+                    <div class="recipe col-md-12"> 
+                        <thead >
+                            <p>Title: <span>{{ recipe.recipe_name }}</span></p>
                         </thead>
                         <tbody>
-                            <p>Ingredients: {{ recipe.ingredients }} </p>
-                            <p>Instructions: {{ recipe.instructions }} </p>
+                            <p>Ingredients: <span>{{ recipe.ingredients }}</span> </p>
+                            <p>Instructions: <span>{{ recipe.instructions }}</span> </p>
                         </tbody>
-                        <button class="btn btn-md btn-success">Edit</button>
-                        <button class="btn btn-md btn-danger">Delete</button>
+                        <button class="btn btn-xs btn-success">Edit</button>
+                        <button class="btn btn-xs btn-danger">Delete</button>
+                    </div>
                     {% endif %}
                 {% endfor %}
             </div>
