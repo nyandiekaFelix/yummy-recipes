@@ -8,6 +8,7 @@ class User(object):
         ''' Initialize user '''
         self.email = email
         self.password = password
+        self.categories = {}
     
     def __repr__(self):
         return '<%(email)s obj>' % dict(email=self.email)
