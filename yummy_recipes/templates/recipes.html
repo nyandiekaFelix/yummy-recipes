@@ -5,36 +5,31 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container jumbotron">
-        <div class="col-md-7">
-            
-            <div class="recipe-body">                    
-                <h2>Recipe Title</h2>
-                <h5>Category</h5>
-                <span class="recipe-span">Here we write a short description on what we are going to cook.</span>
-                <br>
-                <br>
-                
-                <div class="ingredients">
-                    <span class="recipe-span">Ingredients:</span>
-                    <ul>
-                        <li>Item 1</li>
-                        <li>Item 2</li>
-                        <li>Item 3</li>
-                    </ul>
-                </div>
-                <div class="instructions">
-                    <span class="recipe-span">Instructions:</span>
-                    <ul>
-                        <li>Item 1</li>
-                        <li>Item 2</li>
-                        <li>Item 3</li>
-                    </ul>
-                </div>
-            </div>
-            <button class="btn btn-md btn-success recipe-btn">Edit</button>
-            <button class="btn btn-md btn-danger recipe-btn">Delete</button>
+    <div class="jumbotron container-fluid text-centre">
+        <div class="creator">
+            {% from "form_render.html" import render_input %}
+            <form method="POST" class="col-md-5" action="{{ url_for('categories')}}">
+                {{categ_form.csrf_token}}
+                {{ render_input(categ_form.category_name, class='form-control input-md', placeholder='Category Name', required) }}
+                <button type="submit" class="btn btn-md btn-success">Create</button>
+            </form>
         </div>
-    </div>
-
+        
+        <div class="col-md-9">
+            <div class="container col-md-12">
+                <h3>My Categories</h3>
+                <ul class="categ-list pull-left">
+                    {% for category in categs %}
+                        <li class="categ-name">
+                            <span>{{ loop.index }}.</span>
+                            <span id="cat-name">
+                                {{ category.category_name }}
+                            </span>
+                        </li>        
+                    {% endfor %}
+                </ul>   
+            </div>
+        </div>
+        
+</div>
 {% endblock %}
