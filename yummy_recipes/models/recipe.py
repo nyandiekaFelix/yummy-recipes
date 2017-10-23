@@ -1,24 +1,22 @@
-import random
-
-CATEGORIES = {}
+''' Models for Recipe Category and individual category '''
 
 class RecipeCategory(object):
     ''' Recipe Category Model '''
-    def __init__(self, category_name, created_by=None):
-        self.category_id = random.randint(1, 1000)
+    def __init__(self, category_name):
         self.category_name = category_name
         self.recipes = []
-        self.created_by = created_by
+    
+    def __repr__(self):
+        return '<%(category_name)s obj>' % dict(category_name=self.category_name)
 
 class Recipe(object):
     ''' Recipe Model '''
-    def __init__(self, recipe_name, description, ingredients, 
-                instructions, created_by=None):
-        self.recipe_id = random.randint(1, 1000)
+    def __init__(self, recipe_name, ingredients, 
+                 instructions):
         self.recipe_name = recipe_name
-        self.description = description
         self.ingredients = ingredients
         self.instructions = instructions
-        self.created_by = created_by
-
+        
+    def __repr__(self):
+        return '<%(recipe_name)s obj>' % dict(recipe_name=self.recipe_name)
         
