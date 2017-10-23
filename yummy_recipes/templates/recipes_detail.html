@@ -21,12 +21,21 @@
         </div>
         <div class="col-md-7 rec-categs">
             <div class="container col-md-12">
-                {% for recipe in recs %} 
-                    <div class="recipe">
-                        <h4> {{ recipe.recipe_name }} </h4>
-                        <p> {{ recipe.ingredients }} </p>
-                        <p> {{ recipe.instructions }} </p>
-                    </div>
+                <h2>My Recipes</h2>
+                <br/>
+                <br/>
+                {% for recipe in recs %}
+                    {% if recipe.category_name is not none %} 
+                        <thead class="recipe">
+                            <th>Title: {{ recipe.recipe_name }} </th>
+                        </thead>
+                        <tbody>
+                            <p>Ingredients: {{ recipe.ingredients }} </p>
+                            <p>Instructions: {{ recipe.instructions }} </p>
+                        </tbody>
+                        <button class="btn btn-md btn-success">Edit</button>
+                        <button class="btn btn-md btn-danger">Delete</button>
+                    {% endif %}
                 {% endfor %}
             </div>
         </div>
