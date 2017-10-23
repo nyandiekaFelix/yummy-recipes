@@ -85,7 +85,7 @@ def categories():
             else:
                 new_category = RecipeCategory(category_name)
                 user_categs[new_category] = new_category
-
+                
             return redirect(url_for('categories'))
 
     else:
@@ -104,21 +104,21 @@ def recipes():
          session.get('user') in USERS:
         is_auth = True
         creator = session.get('user')
-        user_categs = USERS[creator].categories
-        user_recs = []
-        
+        user_recs = USERS[creator].recipes
+
         if form.validate_on_submit():
             category_name = form.category_name.data
             recipe_name = form.recipe_name.data
             ingredients = form.ingredients.data
             instructions = form.instructions.data
-            category = RecipeCategory(category_name)
-            user_categs[category_name] = category
-            
-            new_recipe = Recipe(recipe_name, ingredients, instructions)
-            user_categs[category_name].recipes.append(new_recipe)
-            user_recs.append(new_recipe)
-            return redirect(url_for('recipes'))
+
+            if recipe_name in user_recs:
+                flash('A recipe with that name already exists')
+            else:    
+                new_recipe = Recipe(category_name, recipe_name, ingredients, instructions)
+                user_recs[new_recipe] = new_recipe
+
+                return redirect(url_for('recipes'))
     else:
         is_auth = False
         return redirect(url_for('signup'))
