@@ -10,7 +10,7 @@
             {% from "form_render.html" import render_input %}
             <form method="POST" class="col-md-5" action="{{ url_for('categories')}}">
                 {{categ_form.csrf_token}}
-                {{ render_input(categ_form.category_name, class='form-control input-md', placeholder='Category Name', required) }}
+                {{ render_input(categ_form.category_name, class='form-control input-md', placeholder='Category Name') }}
                 <button type="submit" class="btn btn-md btn-success">Create</button>
             </form>
         </div>
