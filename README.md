@@ -4,9 +4,9 @@
 [![Website https://yummy-recipes-c1.herokuapp.com/](https://img.shields.io/website-up-down-green-red/http/yummy-recipes-c1.herokuapp.com.svg)](https://yummy-recipes-c1.herokuapp.com/)
 [![Maintainability](https://api.codeclimate.com/v1/badges/7e84426a8f8674159daf/maintainability)](https://codeclimate.com/github/nyandiekaFelix/yummy-recipes/maintainability)
 
-# Project Title
+# Yummy Recipes
 
-Yummy Recipes enables users to write and share recipes, as well as view, edit or delete them.
+Yummy Recipes enables users to write recipes, as well as view, edit or delete them.
 
 ## Getting Started
 
