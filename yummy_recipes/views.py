@@ -89,8 +89,7 @@ def categories():
             return redirect(url_for('categories'))
 
     else:
-        is_auth = False
-        return redirect(url_for('signup'))     
+        return redirect(url_for('categories'))     
     
     return render_template('recipes.html', is_auth=is_auth, categ_form=categ_form, 
                             categs=user_categs)
