@@ -120,8 +120,7 @@ def recipes():
 
                 return redirect(url_for('recipes'))
     else:
-        is_auth = False
-        return redirect(url_for('signup'))
+        return redirect(url_for('recipes'))
 
     return render_template('recipes_detail.html', is_auth=is_auth, form=form, recs=user_recs)
 
