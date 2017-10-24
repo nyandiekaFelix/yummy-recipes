@@ -70,8 +70,7 @@ def categories():
     categ_form = Category()
     
 
-    if session.get('logged_in') is True and\
-         session.get('user') in USERS:
+    if session.get('logged_in') is True:
 
         is_auth = True
         creator = session.get('user')
@@ -99,8 +98,7 @@ def recipes():
     ''' Individual recipes '''
     form = RecipeForm()
 
-    if session.get('logged_in') is True and\
-         session.get('user') in USERS:
+    if session.get('logged_in') is True:
         is_auth = True
         creator = session.get('user')
         user_recs = USERS[creator].recipes
