@@ -9,7 +9,13 @@ from yummy_recipes.models.recipe import RecipeCategory, Recipe
 @APP.route('/home')
 def home():
     ''' Base route '''
-    return render_template('home.html')
+    if session.get('logged_in') is True and\
+            session.get('user') in USERS:
+        is_auth = True
+    else:
+        is_auth = False
+    
+    return render_template('home.html', is_auth=is_auth)
 
 @APP.errorhandler(404)
 def page_not_found(e):
@@ -70,7 +76,8 @@ def categories():
     categ_form = Category()
     
 
-    if session.get('logged_in') is True:
+    if session.get('logged_in') is True and\
+            session.get('user') in USERS:
 
         is_auth = True
         creator = session.get('user')
@@ -79,45 +86,160 @@ def categories():
         if categ_form.validate_on_submit():
             category_name = categ_form.category_name.data
 
-            if category_name in USERS[creator].categories:
+            if category_name in user_categs.values():
                 flash('That category already exists')            
             else:
                 new_category = RecipeCategory(category_name)
-                user_categs[new_category] = new_category
+                user_categs[new_category.category_id] = new_category
                 
             return redirect(url_for('categories'))
 
     else:
-        return redirect(url_for('categories'))     
+        is_auth = False
+        return redirect(url_for('signup'))     
     
-    return render_template('recipes.html', is_auth=is_auth, categ_form=categ_form, 
-                            categs=user_categs)
+    return render_template('recipes.html', is_auth=is_auth, 
+                            categ_form=categ_form, categs=user_categs)
 
 @APP.route('/recipes', methods=['POST', 'GET'])
 def recipes():
     ''' Individual recipes '''
-    form = RecipeForm()
-
-    if session.get('logged_in') is True:
+    rec_form = RecipeForm()
+    
+    if session.get('logged_in') is True and\
+            session.get('user') in USERS:
         is_auth = True
         creator = session.get('user')
-        user_recs = USERS[creator].recipes
+        categs = USERS[creator].categories
 
-        if form.validate_on_submit():
-            category_name = form.category_name.data
-            recipe_name = form.recipe_name.data
-            ingredients = form.ingredients.data
-            instructions = form.instructions.data
+        if rec_form.validate_on_submit():
+            category_id = request.form.get('categ_id')
+            recipe_name = rec_form.recipe_name.data
+            ingredients = rec_form.ingredients.data
+            instructions = rec_form.instructions.data
 
-            if recipe_name in user_recs:
-                flash('A recipe with that name already exists')
-            else:    
-                new_recipe = Recipe(category_name, recipe_name, ingredients, instructions)
-                user_recs[new_recipe] = new_recipe
+            new_recipe = Recipe(recipe_name, ingredients, instructions)
+            
+            if category_id in categs:
+                categs[category_id].recipes[new_recipe.recipe_id] = new_recipe
+            else:
+                flash('category does not exist')
+            return redirect(url_for('recipes'))
 
-                return redirect(url_for('recipes'))
     else:
+        is_auth = False
+        return redirect(url_for('signup'))
+    
+    return render_template('recipes_detail.html', is_auth=is_auth, 
+                            form=rec_form, categs=categs)
+
+@APP.route('/edit_recipe', methods=['POST'])
+def edit_recipe():
+    rec_form = Category()
+
+    if session.get('logged_in') is True and\
+            session.get('user') in USERS:
+        is_auth = True
+        creator = session.get('user')
+        categs = USERS[creator].categories
+
+        recipe_id = request.form.get('recipe_id')
+        category_id = request.form.get('categ_id')
+        new_title = request.form.get('new_title')
+        new_ingredients = request.form.get('new_ingredients')
+        new_instructions = request.form.get('new_instructions')
+
+        categs[category_id].recipes[recipe_id].recipe_name = new_title
+        categs[category_id].recipes[recipe_id].ingredients = new_ingredients
+        categs[category_id].recipes[recipe_id].instructions = new_instructions
+
+        return redirect(url_for('recipes'))
+    else:
+        is_auth = False
+        return redirect(url_for('signup'))
+
+    return render_template('recipes.html', is_auth=is_auth, form=rec_form, 
+                            categs=categs)
+
+    
+
+@APP.route('/del_recipe', methods=['POST'])
+def del_recipe():
+
+    rec_form = Category()
+
+    if session.get('logged_in') is True and\
+            session.get('user') in USERS:
+        is_auth = True
+        creator = session.get('user')
+        categs = USERS[creator].categories
+
+        recipe_id = request.form.get('recipe_id')
+        category_id = request.form.get('categ_id')
+
+        if category_id in categs:
+            del categs[category_id].recipes[recipe_id]
+        else:
+            flash('Recipe Not Found')
+            
         return redirect(url_for('recipes'))
 
-    return render_template('recipes_detail.html', is_auth=is_auth, form=form, recs=user_recs)
+    else:
+        is_auth = False
+        return redirect(url_for('signup'))
+
+    return render_template('recipes.html', is_auth=is_auth, form=rec_form, 
+                            categs=categs)
+
+@APP.route('/edit_category', methods=['POST', 'GET'])
+def edit_category():
+    categ_form = Category()
+
+    if session.get('logged_in') is True and\
+            session.get('user') in USERS:
+        is_auth = True
+        creator = session.get('user')
+        categs = USERS[creator].categories
+
+        category_id = request.form.get('categ_id')
+        new_name = request.form.get('new_name')
+
+        categs[category_id].category_name = new_name
+        
+        return redirect(url_for('categories'))
+
+    else:
+        is_auth = False
+        return redirect(url_for('signup'))
+
+    return render_template('recipes.html', is_auth=is_auth, 
+                            categ_form=categ_form, categs=categs)
+
+
+@APP.route('/del_category', methods=['POST'])
+def del_category():
+    categ_form = Category()
+
+    if session.get('logged_in') is True and\
+            session.get('user') in USERS:
+        is_auth = True
+        creator = session.get('user')
+        categs = USERS[creator].categories
+
+        category_id = request.form.get('categ_id')
+        
+        if category_id in categs:
+            del categs[category_id]
+        else:
+            flash('Category Not Found')
+
+        return redirect(url_for('categories'))
+
+    else:
+        is_auth = False
+        return redirect(url_for('signup'))
+
+    return render_template('recipes.html', is_auth=is_auth, 
+                            categ_form=categ_form, categs=categs)
+
 
