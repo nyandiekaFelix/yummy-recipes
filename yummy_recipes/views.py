@@ -9,8 +9,7 @@ from yummy_recipes.models.recipe import RecipeCategory, Recipe
 @APP.route('/home')
 def home():
     ''' Base route '''
-    if session.get('logged_in') is True and\
-            session.get('user') in USERS:
+    if session.get('logged_in') is True:
         is_auth = True
     else:
         is_auth = False
@@ -76,8 +75,7 @@ def categories():
     categ_form = Category()
     
 
-    if session.get('logged_in') is True and\
-            session.get('user') in USERS:
+    if session.get('logged_in') is True:
 
         is_auth = True
         creator = session.get('user')
@@ -106,8 +104,7 @@ def recipes():
     ''' Individual recipes '''
     rec_form = RecipeForm()
     
-    if session.get('logged_in') is True and\
-            session.get('user') in USERS:
+    if session.get('logged_in') is True:
         is_auth = True
         creator = session.get('user')
         categs = USERS[creator].categories
@@ -137,8 +134,7 @@ def recipes():
 def edit_recipe():
     rec_form = Category()
 
-    if session.get('logged_in') is True and\
-            session.get('user') in USERS:
+    if session.get('logged_in') is True:
         is_auth = True
         creator = session.get('user')
         categs = USERS[creator].categories
@@ -168,8 +164,7 @@ def del_recipe():
 
     rec_form = Category()
 
-    if session.get('logged_in') is True and\
-            session.get('user') in USERS:
+    if session.get('logged_in') is True:
         is_auth = True
         creator = session.get('user')
         categs = USERS[creator].categories
@@ -195,8 +190,7 @@ def del_recipe():
 def edit_category():
     categ_form = Category()
 
-    if session.get('logged_in') is True and\
-            session.get('user') in USERS:
+    if session.get('logged_in') is True:
         is_auth = True
         creator = session.get('user')
         categs = USERS[creator].categories
@@ -220,8 +214,7 @@ def edit_category():
 def del_category():
     categ_form = Category()
 
-    if session.get('logged_in') is True and\
-            session.get('user') in USERS:
+    if session.get('logged_in') is True:
         is_auth = True
         creator = session.get('user')
         categs = USERS[creator].categories
