@@ -36,7 +36,7 @@ class TestRecipe(unittest.TestCase):
         new_recipe = Recipe(recipe_name, ingredients, 
                             instructions)
 
-        self.user.categories[new_category].recipes.append(new_recipe)
+        self.user.categories[new_category].recipes[new_recipe] = new_recipe
         
         self.assertEqual(1, len(self.user.categories[new_category].recipes))
         
