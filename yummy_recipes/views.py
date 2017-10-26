@@ -9,7 +9,8 @@ from yummy_recipes.models.recipe import RecipeCategory, Recipe
 @APP.route('/home')
 def home():
     ''' Base route '''
-    if session.get('logged_in') is True:
+    if session.get('logged_in') is True and\
+            session.get('user') in USERS:
         is_auth = True
     else:
         is_auth = False
@@ -75,7 +76,8 @@ def categories():
     categ_form = Category()
     
 
-    if session.get('logged_in') is True:
+    if session.get('logged_in') is True and\
+            session.get('user') in USERS:
 
         is_auth = True
         creator = session.get('user')
@@ -94,8 +96,7 @@ def categories():
 
     else:
         is_auth = False
-        return redirect(url_for('signup'))     
-    
+        
     return render_template('recipes.html', is_auth=is_auth, 
                             categ_form=categ_form, categs=user_categs)
 
@@ -104,7 +105,8 @@ def recipes():
     ''' Individual recipes '''
     rec_form = RecipeForm()
     
-    if session.get('logged_in') is True:
+    if session.get('logged_in') is True and\
+            session.get('user') in USERS:
         is_auth = True
         creator = session.get('user')
         categs = USERS[creator].categories
@@ -125,8 +127,7 @@ def recipes():
 
     else:
         is_auth = False
-        return redirect(url_for('signup'))
-    
+     
     return render_template('recipes_detail.html', is_auth=is_auth, 
                             form=rec_form, categs=categs)
 
@@ -134,7 +135,8 @@ def recipes():
 def edit_recipe():
     rec_form = Category()
 
-    if session.get('logged_in') is True:
+    if session.get('logged_in') is True and\
+            session.get('user') in USERS:
         is_auth = True
         creator = session.get('user')
         categs = USERS[creator].categories
@@ -152,8 +154,7 @@ def edit_recipe():
         return redirect(url_for('recipes'))
     else:
         is_auth = False
-        return redirect(url_for('signup'))
-
+   
     return render_template('recipes.html', is_auth=is_auth, form=rec_form, 
                             categs=categs)
 
@@ -164,7 +165,8 @@ def del_recipe():
 
     rec_form = Category()
 
-    if session.get('logged_in') is True:
+    if session.get('logged_in') is True and\
+            session.get('user') in USERS:
         is_auth = True
         creator = session.get('user')
         categs = USERS[creator].categories
@@ -181,8 +183,7 @@ def del_recipe():
 
     else:
         is_auth = False
-        return redirect(url_for('signup'))
-
+        
     return render_template('recipes.html', is_auth=is_auth, form=rec_form, 
                             categs=categs)
 
@@ -190,7 +191,8 @@ def del_recipe():
 def edit_category():
     categ_form = Category()
 
-    if session.get('logged_in') is True:
+    if session.get('logged_in') is True and\
+            session.get('user') in USERS:
         is_auth = True
         creator = session.get('user')
         categs = USERS[creator].categories
@@ -204,8 +206,7 @@ def edit_category():
 
     else:
         is_auth = False
-        return redirect(url_for('signup'))
-
+        
     return render_template('recipes.html', is_auth=is_auth, 
                             categ_form=categ_form, categs=categs)
 
@@ -214,7 +215,8 @@ def edit_category():
 def del_category():
     categ_form = Category()
 
-    if session.get('logged_in') is True:
+    if session.get('logged_in') is True and\
+            session.get('user') in USERS:
         is_auth = True
         creator = session.get('user')
         categs = USERS[creator].categories
@@ -230,8 +232,7 @@ def del_category():
 
     else:
         is_auth = False
-        return redirect(url_for('signup'))
-
+        
     return render_template('recipes.html', is_auth=is_auth, 
                             categ_form=categ_form, categs=categs)
 
