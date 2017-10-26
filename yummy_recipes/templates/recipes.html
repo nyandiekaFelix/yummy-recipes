@@ -5,33 +5,43 @@
 {% endblock %}
 
 {% block content %}
-    <div class="jumbotron container-fluid text-centre">
-        <div class="creator">
+    <div class=" container-fluid text-centre">
+        <div class="container creator jumbotron col-md-4">
             {% from "form_render.html" import render_input %}
-            <form method="POST" class="col-md-5" action="{{ url_for('categories')}}">
+            <form method="POST" class="col-md-11" action="{{ url_for('categories')}}">
                 {{categ_form.csrf_token}}
                 {{ render_input(categ_form.category_name, class='form-control input-md', placeholder='Category Name') }}
                 <button type="submit" class="btn btn-md btn-success">Create</button>
             </form>
-        </div>
-        
-        <div class="col-md-9">
+        </div>   
+        <div class="col-md-7 creator jumbotron">
             <div class="container col-md-12">
                 <h3>My Categories</h3>
                 <ul class="categ-list pull-left">
-                    {% for category in categs %}
-                        <li class="categ-name">
-                            <span>{{ loop.index }}.</span>
+                    {% for categ, categ_id in categs.items() %}
+                        <div class="categ-name row">
                             <span id="cat-name">
-                                {{ category.category_name }}
+                                {{ loop.index }}. {{ categ_id["category_name"] }}
                             </span>
-                            <button class="btn btn-xs btn-success">Edit</button>
-                            <button class="btn btn-xs btn-danger">Delete</button>
-                        </li>        
+                           
+                            <form method="POST" action="{{ url_for('edit_category') }}">
+                                {{categ_form.csrf_token}}
+                                <input type="hidden" class="form-control pull-left" name="categ_id" 
+                                    value='{{ categ_id["category_id"] }}'>
+                                <input type="text" class="form-control pull-left" name="new_name" 
+                                    placeholder="Change Name" required>
+                                <button type="submit" class="manipulators btn btn-xs btn-success">Save</button>
+                            </form>
+                            <form method="POST" action="{{ url_for('del_category') }}">
+                                {{categ_form.csrf_token}}
+                                <input type="hidden" class="form-control" name="categ_id" 
+                                    value='{{ categ_id["category_id"] }}'>
+                                <button type="submit" class="manipulators btn btn-xs btn-danger">Delete</button>
+                            </form>
+                        </div>        
                     {% endfor %}
                 </ul>   
             </div>
-        </div>
-        
+        </div>             
 </div>
 {% endblock %}
