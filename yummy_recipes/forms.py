@@ -29,12 +29,6 @@ class Category(Form):
 
 class RecipeForm(Form):
     ''' individual recipes form '''
-    category_name = StringField(
-        'Category Name: ', validators=[InputRequired(),
-                                        DataRequired(),
-                                        Regexp("^[A-Za-z0-9_-]+( +[A-Za-z0-9_-]+)*$",
-                                                0,
-                                                'Use only letters numbers and spaces')])
     recipe_name = StringField(
         'Recipe Name: ', validators=[InputRequired(),
                                         DataRequired(),
@@ -43,15 +37,9 @@ class RecipeForm(Form):
                                                 'Use only letters numbers and spaces')])
     ingredients = StringField(
         'Ingredients: ', validators=[InputRequired(),
-                                        DataRequired(),
-                                        Regexp("^[A-Za-z0-9_-]+( +[A-Za-z0-9_-]+)*$",
-                                                0,
-                                                'Use only letters numbers and spaces')])
+                                        DataRequired()])
     
     instructions = StringField(
         'Instructions: ', validators=[InputRequired(),
-                                        DataRequired(),
-                                        Regexp("^[A-Za-z0-9_-]+( +[A-Za-z0-9_-]+)*$",
-                                                0,
-                                                'Use only letters numbers and spaces')])
+                                        DataRequired()])
     
