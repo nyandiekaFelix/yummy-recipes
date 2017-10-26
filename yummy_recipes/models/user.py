@@ -9,7 +9,6 @@ class User(object):
         self.email = email
         self.password = password
         self.categories = {}
-        self.recipes = {}
     
     def __repr__(self):
         return '<%(email)s obj>' % dict(email=self.email)
