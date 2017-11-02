@@ -10,8 +10,8 @@
             {% from "form_render.html" import render_input %}
             <form method="POST" class="col-md-11" action="{{ url_for('recipes')}}">
                 {{form.csrf_token}}
-                <h2> New Recipe </h2>
-                <select name="categ_id" class="col-md-12 category-dd" required>
+                <h2> NEW RECIPE </h2>
+                <select name="categ_id" class="col-md-12">
                     <option disabled selected>Category</option>
                     {% for categ, categ_id in categs.items() %}
                         <option value='{{ categ_id["category_id"] }}'>
@@ -28,37 +28,52 @@
         </div>
         <div class="col-md-7 rec-categs creator jumbotron">
             <div class="container col-md-12">
-                <h2>My Recipes</h2>
+                <h2>MY RECIPES</h2>
                 <br/>
                 <br/>
                 {% for categ, categ_id in categs.items() %}
-                    <h3 style="color:blueviolet">Category: {{ categ_id["category_name"] }}</h3>
+                <div>
+                    <h2 style="color:rgb(43, 128, 226); margin-left:-10px">
+                        {{ categ_id["category_name"] }} category
+                    </h2>
                     {% for recipe, rec_id in categ_id["recipes"].items() %}
-                        <div class="recipe col-md-12"> 
-                            <thead >
-                                <p>Title: <span>{{ rec_id["recipe_name"] }}</span></p>
-                            </thead>
-                            <tbody>
-                                <p>Ingredients: <span>{{ rec_id["ingredients"] }}</span> </p>
-                                <p>Instructions: <span>{{ rec_id["instructions"] }}</span> </p>
-                            </tbody>
+                    <div>
+                        <div><h3>#{{ loop.index }}. {{ rec_id["recipe_name"] }}</h3></div>
+                        <div class="recipe col-md-12" style="word-wrap: break-word;"> 
+                            <div>
+                                <h3 style="text-decoration: underline">Ingredients</h3>
+                                <p> {{ rec_id["ingredients"] }} </p>
+                            </div>
+                            <div>
+                                <h3 style="text-decoration: underline">Instructions</h3>
+                                <p>{{ rec_id["instructions"] }}</p>
+                            </div>
+
                             <button class="edit manipulators btn btn-xs btn-primary" 
-                                id="{{ loop.index }}">Edit</button>
+                                id="{{ categ_id['category_id'] }}-{{ loop.index }}">Edit</button>
 
                             <form method="POST" action="{{ url_for('edit_recipe')}}" style="display: none;" 
-                                id="form-{{ loop.index }}">
+                                id="form-{{ categ_id['category_id'] }}-{{ loop.index }}">
                                 {{form.csrf_token}}
                                 <input type="hidden" class="form-control" 
                                     name="categ_id" value='{{ categ_id["category_id"] }}'>
                                 <input type="hidden" class="form-control" 
                                     name="recipe_id" value='{{ rec_id["recipe_id"] }}'>
-                                <h5>Edit Recipe Details: </h5>
-                                <input type="text" class="form-control pull-left" name="new_title" 
-                                    placeholder="Edit Title" value='{{ rec_id["recipe_name"] }}' required>
-                                <input type="text" class="form-control pull-left" name="new_ingredients" 
-                                    placeholder="Edit Ingredients" value='{{ rec_id["ingredients"] }}'required>
-                                <input type="text" class="form-control pull-left" name="new_instructions" 
-                                    placeholder="Edit Instructions" value='{{ rec_id["instructions"] }}' required>
+                                <div>
+                                    <span>Title</span>
+                                    <input type="text" class="form-control pull-left" name="new_title" 
+                                        placeholder="Edit Title" value='{{ rec_id["recipe_name"] }}' required>
+                                </div>
+                                <div>
+                                    <span>Ingredients</span>
+                                    <input type="text" class="form-control pull-left" name="new_ingredients" 
+                                        placeholder="Edit Ingredients" value='{{ rec_id["ingredients"] }}'required>
+                                </div>
+                                <div>
+                                    <span>Instructions</span>
+                                    <input type="text" class="form-control pull-left" name="new_instructions" 
+                                        placeholder="Edit Instructions" value='{{ rec_id["instructions"] }}' required>
+                                </div>
                                 <button type="submit" 
                                     class="manipulators btn btn-xs btn-success">Save</button>
                             </form>
@@ -73,7 +88,9 @@
                             </form>
                             
                         </div>
+                    </div>
                     {% endfor %}
+                </div>
                 {% endfor %}
             </div>
         </div>
