@@ -1,6 +1,13 @@
-body, html{
+body{
     height: 100%;
     width: 100%;
+    background-color: #9bcefd !important;
+}
+h2{
+    text-decoration: underline;
+}
+.jumbotron, input, .btn{
+    border-radius: 0 !important;
 }
 
 .home-link{
@@ -16,7 +23,6 @@ button a:hover{
 
 .creator{
     margin: 20px 10px;
-
 }
 
 .category{
@@ -34,10 +40,6 @@ button a:hover{
 
 .rec-categs{
     border-radius: 0 !important;
-}
-
-.rec-categs > h3{
-    text-decoration: underline;
 }
 
 .categ-name{
