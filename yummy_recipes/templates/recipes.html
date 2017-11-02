@@ -16,15 +16,18 @@
         </div>   
         <div class="col-md-7 creator jumbotron">
             <div class="container col-md-12">
-                <h3>My Categories</h3>
+                <h2>My Categories</h2>
                 <ul class="categ-list pull-left">
                     {% for categ, categ_id in categs.items() %}
                         <div class="categ-name row">
-                            <span id="cat-name">
+                            <h3>
                                 {{ loop.index }}. {{ categ_id["category_name"] }}
-                            </span>
-                           
-                            <form method="POST" action="{{ url_for('edit_category') }}">
+                            </h3>
+                            <button class="edit manipulators btn btn-xs btn-primary" 
+                                id="{{ loop.index }}">Edit</button>
+                                
+                            <form method="POST" action="{{ url_for('edit_category') }}" 
+                                id="form-{{ loop.index }}" style="display: none;">
                                 {{categ_form.csrf_token}}
                                 <input type="hidden" class="form-control pull-left" name="categ_id" 
                                     value='{{ categ_id["category_id"] }}'>
@@ -43,5 +46,17 @@
                 </ul>   
             </div>
         </div>             
-</div>
+    </div>
+    {% block scripts %}
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('.edit').each(function () {
+                    var toggled_id = 'form-' + $(this).attr('id');
+                    $(this).click(function () {
+                        $('#' + toggled_id).toggle();
+                    });
+                });
+            });
+        </script> 
+    {% endblock %}
 {% endblock %}
