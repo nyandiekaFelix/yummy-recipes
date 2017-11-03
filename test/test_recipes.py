@@ -7,9 +7,9 @@ from yummy_recipes.models.recipe import RecipeCategory, Recipe
 class TestRecipe(unittest.TestCase):
     ''' Test recipe categories and individual recipes '''
     def setUp(self):
-         APP.WTF_CSRF_ENABLED = False
-         self.user = User("name@domain.com", "Very_1secret")
-
+        APP.config['WTF_CSRF_ENABLED'] = False
+        self.user = User("name@domain.com", "Very_1secret")
+        
     def test_recipe_category_creation(self):
         ''' should create category '''
         sample_category = RecipeCategory('Breakfast')
