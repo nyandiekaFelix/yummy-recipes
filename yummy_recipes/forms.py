@@ -2,7 +2,7 @@ from flask_wtf import Form
 from wtforms import StringField, PasswordField, SelectField
 from wtforms.validators import Email, InputRequired, DataRequired, Regexp, EqualTo, Length
 
-class Signup(Form):
+class SignupForm(Form):
     ''' User registration form '''
     email = StringField('Email:', validators=[Email(), InputRequired()])
     password = PasswordField('Password:', validators=[InputRequired(), Length(min=4, max=25),
@@ -13,12 +13,12 @@ class Signup(Form):
 
     password_confirm = PasswordField('Confirm password:')
     
-class Login(Form):
+class LoginForm(Form):
     ''' User log in form '''
     email = StringField('Email:', validators=[Email(), InputRequired()])
     password = PasswordField('Password:', validators=[InputRequired()])
     
-class Category(Form):
+class CategoryForm(Form):
     ''' Recipe Category Form '''
     category_name = StringField(
         'New Category:', validators=[InputRequired(),
