@@ -1,5 +1,5 @@
-[![Build Status](https://travis-ci.org/nyandiekaFelix/yummy-recipes.svg?branch=master)](https://travis-ci.org/nyandiekaFelix/yummy-recipes)
-[![Coverage Status](https://coveralls.io/repos/github/nyandiekaFelix/yummy-recipes/badge.svg?branch=master)](https://coveralls.io/github/nyandiekaFelix/yummy-recipes?branch=master)
+[![Build Status](https://travis-ci.org/nyandiekaFelix/yummy-recipes.svg?branch=develop)](https://travis-ci.org/nyandiekaFelix/yummy-recipes)
+[![Coverage Status](https://coveralls.io/repos/github/nyandiekaFelix/yummy-recipes/badge.svg?branch=develop)](https://coveralls.io/github/nyandiekaFelix/yummy-recipes?branch=develop)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/nyandiekaFelix/yummy-recipes/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/nyandiekaFelix/yummy-recipes/?branch=master)
 [![Website https://yummy-recipes-c1.herokuapp.com/](https://img.shields.io/website-up-down-green-red/http/yummy-recipes-c1.herokuapp.com.svg)](https://yummy-recipes-c1.herokuapp.com/)
 [![Maintainability](https://api.codeclimate.com/v1/badges/7e84426a8f8674159daf/maintainability)](https://codeclimate.com/github/nyandiekaFelix/yummy-recipes/maintainability)
