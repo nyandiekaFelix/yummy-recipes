@@ -5,27 +5,42 @@ from yummy_recipes.forms import Login, Signup, RecipeForm, Category
 from yummy_recipes.models.user import User, USERS
 from yummy_recipes.models.recipe import RecipeCategory, Recipe
 
+
 @APP.route('/')
 @APP.route('/home')
 def home():
     ''' Base route '''
     if session.get('logged_in') is True and\
             session.get('user') in USERS:
+
         is_auth = True
     else:
         is_auth = False
-    
+
     return render_template('home.html', is_auth=is_auth)
 
 @APP.errorhandler(404)
-def page_not_found(e):
+def page_not_found(err):
     ''' 404 error handler '''
-    return render_template('404.html')
+    if session.get('logged_in') is True and\
+            session.get('user') in USERS:
+
+        is_auth = True
+    else:
+        is_auth = False
+
+    return render_template('404.html', is_auth=is_auth)
 
 @APP.route('/signup', methods=['POST', 'GET'])
 def signup():
     ''' Create New user '''
     is_auth = False
+    if session.get('logged_in') is True and\
+            session.get('user') in USERS:
+
+        is_auth = True
+        return redirect(url_for('categories'))
+   
     form = Signup()
     if request.method == 'POST' and form.validate_on_submit():
         email = form.email.data
@@ -49,16 +64,22 @@ def signup():
 def login():
     ''' Log In User '''
     is_auth = False
+    if session.get('logged_in') is True and\
+            session.get('user') in USERS:
+
+        is_auth = True
+        return redirect(url_for('categories'))
+    
     form = Login()
     if request.method == 'POST' and form.validate_on_submit():
         email = form.email.data
         password = form.password.data
         
         if email in USERS and USERS[email].password == password:
-                is_auth = True
-                session['user'] = email
-                session["logged_in"] = True
-                return redirect(url_for('categories'))
+            is_auth = True
+            session['user'] = email
+            session["logged_in"] = True
+            return redirect(url_for('categories'))
         else:
             flash('Wrong Email or Password!')
     
@@ -68,7 +89,8 @@ def login():
 def logout():
     ''' Log Out User '''
     session['logged_in'] = False
-    return redirect(url_for('home'))
+    session.pop('user')
+    return render_template('home.html', is_auth=False)
     
 @APP.route('/categories', methods=['POST', 'GET'])
 def categories():
@@ -85,12 +107,13 @@ def categories():
 
         if categ_form.validate_on_submit():
             category_name = categ_form.category_name.data
-
+            
             if category_name in user_categs.values():
                 flash('That category already exists')            
             else:
                 new_category = RecipeCategory(category_name)
                 user_categs[new_category.category_id] = new_category
+                flash('Category created')
                 
             return redirect(url_for('categories'))
 
