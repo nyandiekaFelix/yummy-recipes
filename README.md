@@ -68,8 +68,4 @@ Enter the following commands on your terminal one by one:
 
 ## Authors
 
-[Nyandieka](https://github.com/nyandiekafelix)
-
-## License
-
-This project is licensed under the MIT License 
+- [Nyandieka](https://github.com/nyandiekafelix)
