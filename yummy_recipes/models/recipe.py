@@ -13,7 +13,7 @@ class RecipeCategory(object):
         return '<%(category_name)s obj>' % dict(category_name=self.category_name)
 
 class Recipe(object):
-    ''' Recipe Model '''
+    ''' Individual Recipe Model '''
     def __init__(self, recipe_name, ingredients, 
                  instructions):
         self.recipe_id = str(uuid4())
