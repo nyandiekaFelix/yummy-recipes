@@ -98,8 +98,7 @@ def logout():
 @APP.route('/categories', methods=['POST', 'GET'])
 def categories():
     ''' This route handles creation and viewing of recipe Categories  '''
-    categ_form = CategoryForm()
-    
+    categ_form = CategoryForm()    
 
     if session.get('logged_in') is True and\
             session.get('user') in USERS:
@@ -184,7 +183,7 @@ def edit_recipe():
 
         recipe_id = request.form.get('recipe_id')
         category_id = request.form.get('categ_id')
-        new_title = lower_name(request.form.get('new_title'))
+        new_title = lower_name(request.form.get('new_title')) 
         new_ingredients = request.form.get('new_ingredients')
         new_instructions = request.form.get('new_instructions')
 
@@ -196,9 +195,11 @@ def edit_recipe():
         if recipe_exists is True:
             flash('A recipe with that name exists')
         else:
-            categs[category_id].recipes[recipe_id].recipe_name = new_title
-            categs[category_id].recipes[recipe_id].ingredients = new_ingredients
-            categs[category_id].recipes[recipe_id].instructions = new_instructions
+            recipe_to_edit = categs[category_id].recipes[recipe_id]
+
+            recipe_to_edit.recipe_name = new_title if new_title else recipe_to_edit.recipe_name
+            recipe_to_edit.ingredients = new_ingredients if new_ingredients else recipe_to_edit.ingredients
+            recipe_to_edit.instructions = new_instructions if new_instructions else recipe_to_edit.instructions
             flash('recipe updated')
 
         return redirect(url_for('recipes'))
