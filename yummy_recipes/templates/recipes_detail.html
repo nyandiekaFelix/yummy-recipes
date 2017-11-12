@@ -33,20 +33,28 @@
                 <br/>
                 {% for categ, categ_id in categs.items() %}
                 <div>
-                    <h2 style="color:rgb(43, 128, 226); margin-left:-10px">
+                    <h2 style="color:rgb(43, 128, 226); margin-left:-10px; text-transform: capitalize;">
                         {{ categ_id["category_name"] }} category
                     </h2>
                     {% for recipe, rec_id in categ_id["recipes"].items() %}
-                    <div>
-                        <div><h3>#{{ loop.index }}. {{ rec_id["recipe_name"] }}</h3></div>
+                    <div class="container-fluid" 
+                        style="padding: 10px; margin-bottom: 5px;
+                            -webkit-box-shadow: 0px 0px 11px 0 rgba(158,158,158,1); 
+                            -moz-box-shadow: 0px 0px 11px 0 rgba(158,158,158,1); 
+                            box-shadow: 0px 0px 11px 0 rgba(158,158,158,1);">
+                        <div>
+                            <h3 style="text-decoration: underline; text-transform: capitalize;  color: #000;">
+                                {{ rec_id["recipe_name"] }}
+                            </h3>
+                        </div>
                         <div class="recipe col-md-12" style="word-wrap: break-word;"> 
                             <div>
-                                <h3 style="text-decoration: underline">Ingredients</h3>
-                                <p> {{ rec_id["ingredients"] }} </p>
+                                <h3>Ingredients</h3>
+                                <p style="color: #2e2d2d; margin-left: 5px;"> {{ rec_id["ingredients"] }} </p>
                             </div>
                             <div>
-                                <h3 style="text-decoration: underline">Instructions</h3>
-                                <p>{{ rec_id["instructions"] }}</p>
+                                <h3>Instructions</h3>
+                                <p style="color: #2e2d2d; margin-left: 5px;">{{ rec_id["instructions"] }}</p>
                             </div>
 
                             <button class="edit manipulators btn btn-xs btn-primary" 
