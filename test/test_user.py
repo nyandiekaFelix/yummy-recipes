@@ -1,10 +1,9 @@
 import unittest
 
 from yummy_recipes import APP
-from yummy_recipes.models.user import User, USERS
 
-class TestAuth(unittest.TestCase):
-
+class TestUser(unittest.TestCase):
+    ''' Tests for authentication methods '''
     def setUp(self):
         APP.config['WTF_CSRF_ENABLED'] = False
    
