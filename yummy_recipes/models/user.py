@@ -1,7 +1,8 @@
-import random
+''' User Model '''
 
 USERS = {}
-    
+
+
 class User(object):
     ''' User model '''
     def __init__(self, email, password):
@@ -9,6 +10,6 @@ class User(object):
         self.email = email
         self.password = password
         self.categories = {}
-    
+
     def __repr__(self):
-        return '<%(email)s obj>' % dict(email=self.email)
+        return 'User: {}'.format(self.email)
