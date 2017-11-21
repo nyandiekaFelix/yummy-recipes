@@ -136,7 +136,7 @@ def recipes():
         categs = USERS[creator].categories
         if rec_form.validate_on_submit():
             category_id = request.form.get('categ_id')
-            recipe_name = rec_form.recipe_name.data.lower
+            recipe_name = rec_form.recipe_name.data.lower()
             ingredients = rec_form.ingredients.data
             instructions = rec_form.instructions.data
 
