@@ -50,7 +50,6 @@ def signup():
         raw_email = form.email.data
         email_name, domain_part = raw_email.strip().rsplit('@', 1)
         email = '@'.join([email_name.lower(), domain_part.lower()])
-
         password = form.password.data
         if email in USERS:
             flash("An account with that email already exists.")
@@ -80,7 +79,6 @@ def login():
         raw_email = form.email.data
         email_name, domain_part = raw_email.strip().rsplit('@', 1)
         email = '@'.join([email_name.lower(), domain_part.lower()])
-
         password = form.password.data
         if email in USERS and USERS[email].password == password:
             is_auth = True
