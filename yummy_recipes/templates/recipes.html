@@ -5,50 +5,58 @@
 {% endblock %}
 
 {% block content %}
-    <div class=" container-fluid text-centre">
-        <div class="container creator jumbotron col-md-4">
-            {% from "form_render.html" import render_input %}
-            <form method="POST" class="col-md-11" action="{{ url_for('categories')}}">
-                {{categ_form.csrf_token}}
-                {{ render_input(categ_form.category_name, class='form-control input-md', placeholder='Category Name') }}
-                <button type="submit" class="btn btn-md btn-success">Create</button>
-            </form>
-        </div>   
-        <div class="col-md-7 creator jumbotron">
+    <div class=" container-fluid text-centre">           
+        <div class="col-md-7">
             <div class="container col-md-12">
                 <h2>My Categories</h2>
                 <ul class="categ-list pull-left col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     {% for categ, categ_id in categs.items() %}
-                        <div class="categ-name row container-fluid" 
-                            style="padding: 10px; 
-                                -webkit-box-shadow: 0px 0px 11px 0 rgba(158,158,158,1);
-                                -moz-box-shadow: 0px 0px 11px 0 rgba(158,158,158,1);
-                                box-shadow: 0px 0px 11px 0 rgba(158,158,158,1);">
+                        <div class="categ-name row container-fluid">
 
-                            <h3 style="text-transform: capitalize;">
-                                {{ loop.index }}. {{ categ_id["category_name"] }}
-                            </h3>
-                            <button class="edit manipulators btn btn-xs btn-primary" 
-                                id="{{ loop.index }}">Edit</button>
-                                
-                            <form method="POST" action="{{ url_for('edit_category') }}" 
-                                id="form-{{ loop.index }}" style="display: none;">
-                                {{categ_form.csrf_token}}
-                                <input type="hidden" class="form-control pull-left" name="categ_id" 
-                                    value='{{ categ_id["category_id"] }}'>
-                                <input type="text" class="form-control pull-left" name="new_name" 
-                                    placeholder="Change Name" required>
-                                <button type="submit" class="manipulators btn btn-xs btn-success">Save</button>
-                            </form>
-                            <form method="POST" action="{{ url_for('delete_category') }}">
-                                {{categ_form.csrf_token}}
-                                <input type="hidden" class="form-control" name="categ_id" 
-                                    value='{{ categ_id["category_id"] }}'>
-                                <button type="submit" class="manipulators btn btn-xs btn-danger">Delete</button>
-                            </form>
+                            <div class="container-fluid">
+                                <span style="text-transform: capitalize;">
+                                    {{ loop.index }}. {{ categ_id["category_name"] }}
+                                </span>
+                                <div class="btn-group pull-right inline">
+                                    <button class="edit manipulators btn btn-xs btn-primary" id="{{ loop.index }}">
+                                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                        <strong>Edit</strong>
+                                    </button>
+                                </div>                                
+                            </div>
+                        
+                            <div class="container-fluid"  id="form-{{ loop.index }}" style="display: none;">                                
+                                <form method="POST" action="{{ url_for('edit_category') }}">
+                                    {{categ_form.csrf_token}}
+                                    <input type="hidden" class="form-control pull-left" name="categ_id" value='{{ categ_id["category_id"] }}'>
+                                    <input type="text" class="form-control pull-left" name="new_name" placeholder="Change Name" required>
+                                    <button type="submit" class="manipulators btn btn-xs btn-success">
+                                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                                        <strong>Save</strong>
+                                    </button>
+                                </form>
+                                <form method="POST" action="{{ url_for('delete_category') }}">
+                                    {{categ_form.csrf_token}}
+                                    <input type="hidden" class="form-control" name="categ_id" value='{{ categ_id["category_id"] }}'>
+                                    <button type="submit" class="manipulators btn btn-xs btn-danger">
+                                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                        <strong>Delete</strong>
+                                    </button>
+                                </form>
+                            </div>
                         </div>        
                     {% endfor %}
                 </ul>   
+            </div>
+            <div class="container">
+                {% from "form_render.html" import render_input %}
+                <form method="POST" class="col-md-6" action="{{ url_for('categories')}}">
+                    {{ categ_form.csrf_token }} {{ render_input(categ_form.category_name, class='form-control input-md', placeholder='New Category') }}
+                    <button type="submit" class="btn btn-md btn-success">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                        <strong>Create</strong>
+                    </button>
+                </form>
             </div>
         </div>             
     </div>
