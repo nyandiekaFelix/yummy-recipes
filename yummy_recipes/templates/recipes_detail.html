@@ -23,83 +23,107 @@
                 {{ render_input(form.ingredients, class='form-control input-md', placeholder='Ingredients') }}
                 {{ render_input(form.instructions, class='form-control input-md', placeholder='Instructions') }}
                 
-                <button type="submit" class="btn btn-md btn-success">Create</button>
+                <button type="submit" class="btn btn-md btn-success">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    <strong>Create</strong>
+                </button>
             </form>
         </div>
-        <div class="col-md-7 rec-categs creator jumbotron">
+        <div class="col-md-7">
             <div class="container col-md-12">
                 <h2>MY RECIPES</h2>
-                <br/>
-                <br/>
-                {% for categ, categ_id in categs.items() %}
-                <div>
-                    <h2 style="color:rgb(43, 128, 226); margin-left:-10px; text-transform: capitalize;">
-                        {{ categ_id["category_name"] }} category
-                    </h2>
-                    {% for recipe, rec_id in categ_id["recipes"].items() %}
-                    <div class="container-fluid" 
-                        style="padding: 10px; margin-bottom: 5px;
-                            -webkit-box-shadow: 0px 0px 11px 0 rgba(158,158,158,1); 
-                            -moz-box-shadow: 0px 0px 11px 0 rgba(158,158,158,1); 
-                            box-shadow: 0px 0px 11px 0 rgba(158,158,158,1);">
-                        <div>
-                            <h3 style="text-decoration: underline; text-transform: capitalize;  color: #000;">
-                                {{ rec_id["recipe_name"] }}
-                            </h3>
-                        </div>
-                        <div class="recipe col-md-12" style="word-wrap: break-word;"> 
-                            <div>
-                                <h3>Ingredients</h3>
-                                <p style="color: #2e2d2d; margin-left: 5px;"> {{ rec_id["ingredients"] }} </p>
-                            </div>
-                            <div>
-                                <h3>Instructions</h3>
-                                <p style="color: #2e2d2d; margin-left: 5px;">{{ rec_id["instructions"] }}</p>
-                            </div>
+                <div class="card">
+                    <ul class="nav nav-tabs" style="list-style-type: none">
+                        {% for categ, categ_id in categs.items() %}
+                            <li>
+                                <a href="#{{ categ_id['category_name'] }}"
+                                    data-toggle="tab" style="text-transform: capitalize;">
+                                    {{ categ_id["category_name"] }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="tab-content">
+                    {% for categ, categ_id in categs.items() %}
 
-                            <button class="edit manipulators btn btn-xs btn-primary" 
-                                id="{{ categ_id['category_id'] }}-{{ loop.index }}">Edit</button>
+                        <div class="tab-pane" id="{{ categ_id['category_name'] }}">
+                            {% if categ_id["recipes"].items() %} 
+                                {% for recipe, rec_id in categ_id["recipes"].items() %}
+                                    <div class="container-fluid" 
+                                        style="padding: 10px; margin-bottom: 5px; border-bottom: dashed 1px;">
+                                        <div>
+                                            <h3 style="text-decoration: underline; text-transform: capitalize;  color: #000;">
+                                                {{ loop.index }}. {{ rec_id["recipe_name"] }}
+                                            </h3>
+                                        </div>
+                                        <div class="recipe col-md-12" style="word-wrap: break-word;"> 
+                                            <div>
+                                                <h3>Ingredients</h3>
+                                                <p style="color: #2e2d2d; margin-left: 5px;"> {{ rec_id["ingredients"] }} </p>
+                                            </div>
+                                            <div>
+                                                <h3>Instructions</h3>
+                                                <p style="color: #2e2d2d; margin-left: 5px;">{{ rec_id["instructions"] }}</p>
+                                            </div>
 
-                            <form method="POST" action="{{ url_for('edit_recipe')}}" style="display: none;" 
-                                id="form-{{ categ_id['category_id'] }}-{{ loop.index }}">
-                                {{form.csrf_token}}
-                                <input type="hidden" class="form-control" 
-                                    name="categ_id" value='{{ categ_id["category_id"] }}'>
-                                <input type="hidden" class="form-control" 
-                                    name="recipe_id" value='{{ rec_id["recipe_id"] }}'>
-                                <div>
-                                    <span>Title</span>
-                                    <input type="text" class="form-control pull-left" name="new_title" 
-                                        placeholder="Edit Title">
-                                </div>
-                                <div>
-                                    <span>Ingredients</span>
-                                    <input type="text" class="form-control pull-left" name="new_ingredients" 
-                                        placeholder="Edit Ingredients">
-                                </div>
-                                <div>
-                                    <span>Instructions</span>
-                                    <input type="text" class="form-control pull-left" name="new_instructions" 
-                                        placeholder="Edit Instructions">
-                                </div>
-                                <button type="submit" 
-                                    class="manipulators btn btn-xs btn-success">Save</button>
-                            </form>
-                            <form method="POST" action="{{ url_for('delete_recipe')}}">
-                                {{form.csrf_token}}
-                                <input type="hidden" class="form-control" 
-                                    name="categ_id" value='{{ categ_id["category_id"] }}'>
-                                <input type="hidden" class="form-control" 
-                                    name="recipe_id" value='{{ rec_id["recipe_id"] }}'>
-                                <button type="submit"
-                                    class="manipulators btn btn-xs btn-danger">Delete</button>
-                            </form>
-                            
+                                            <button class="edit btn btn-xs btn-primary" 
+                                                id="{{ categ_id['category_id'] }}-{{ loop.index }}">
+                                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                                <strong>Edit</strong>
+                                            </button>
+
+                                            <form method="POST" action="{{ url_for('edit_recipe')}}" style="display: none;" 
+                                                id="form-{{ categ_id['category_id'] }}-{{ loop.index }}">
+                                                {{form.csrf_token}}
+                                                <input type="hidden" class="form-control" 
+                                                    name="categ_id" value='{{ categ_id["category_id"] }}'>
+                                                <input type="hidden" class="form-control" 
+                                                    name="recipe_id" value='{{ rec_id["recipe_id"] }}'>
+                                                <div>
+                                                    <span>Title</span>
+                                                    <input type="text" class="form-control pull-left" name="new_title" 
+                                                        placeholder="Edit Title">
+                                                </div>
+                                                <div>
+                                                    <span>Ingredients</span>
+                                                    <input type="text" class="form-control pull-left" name="new_ingredients" 
+                                                        placeholder="Edit Ingredients">
+                                                </div>
+                                                <div>
+                                                    <span>Instructions</span>
+                                                    <input type="text" class="form-control pull-left" name="new_instructions" 
+                                                        placeholder="Edit Instructions">
+                                                </div>
+                                                <button type="submit" 
+                                                    class="btn btn-xs btn-success">
+                                                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                                                    <strong>Save</strong>
+                                            </button>
+                                            </form>
+                                            <form method="POST" action="{{ url_for('delete_recipe')}}">
+                                                {{form.csrf_token}}
+                                                <input type="hidden" class="form-control" 
+                                                    name="categ_id" value='{{ categ_id["category_id"] }}'>
+                                                <input type="hidden" class="form-control" 
+                                                    name="recipe_id" value='{{ rec_id["recipe_id"] }}'>
+                                                <button type="submit"
+                                                    class="btn btn-xs btn-danger">
+                                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                                    <strong>Delete</strong>
+                                                </button>
+                                            </form>
+                                            
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                <span>No recipes to show</span>
+                            {% endif %}
                         </div>
-                    </div>
+
                     {% endfor %}
                 </div>
-                {% endfor %}
             </div>
         </div>
     </div>
