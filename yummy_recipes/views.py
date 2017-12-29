@@ -4,7 +4,7 @@ from yummy_recipes import APP
 from yummy_recipes.forms import LoginForm, SignupForm, RecipeForm, CategoryForm
 from yummy_recipes.models.user import User, USERS
 from yummy_recipes.models.recipe import RecipeCategory, Recipe
-from yummy_recipes.helpers import lower_email, check_for_duplicate
+from yummy_recipes.helpers import check_for_duplicate
 
 
 @APP.route('/')
@@ -47,7 +47,9 @@ def signup():
         return redirect(url_for('categories'))
     form = SignupForm()
     if form.validate_on_submit():
-        email = lower_email(form.email.data)
+        raw_email = form.email.data
+        email_name, domain_part = raw_email.strip().rsplit('@', 1)
+        email = '@'.join([email_name.lower(), domain_part.lower()])
         password = form.password.data
         if email in USERS:
             flash("An account with that email already exists.")
@@ -74,7 +76,9 @@ def login():
         return redirect(url_for('categories'))
     form = LoginForm()
     if form.validate_on_submit():
-        email = lower_email(form.email.data)
+        raw_email = form.email.data
+        email_name, domain_part = raw_email.strip().rsplit('@', 1)
+        email = '@'.join([email_name.lower(), domain_part.lower()])
         password = form.password.data
         if email in USERS and USERS[email].password == password:
             is_auth = True
